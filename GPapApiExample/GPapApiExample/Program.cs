@@ -34,8 +34,8 @@ namespace GPapApiExample
             User user = null;
             try
             {
-                string username = "interkontakt";
-                string password = "interkontakt2018*";
+                string username = "yourusername";
+                string password = "yourpassword";
 
                 var uri = new Uri(string.Format(REST_URL, "api/User/login"));
                 var jsonRequest = JsonConvert.SerializeObject(new { Username = username, Password = password });
