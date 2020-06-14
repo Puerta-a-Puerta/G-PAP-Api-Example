@@ -12,7 +12,7 @@ namespace GPapApiExample
     class Program
     {
         private static HttpClient _httpClient;
-        private const string REST_URL = "http://166.62.126.46:8082/{0}";
+        private const string REST_URL = "https://api.puertaapuertacr.com/{0}";
 
         static void Main(string[] args)
         {
@@ -82,7 +82,7 @@ namespace GPapApiExample
                 Comments = "costa test",
                 Distrito = "Mata Redonda",
                 DistritoDelivery = "TEST",
-                FechaRuta = "20-11-2018",
+                FechaRuta = "11-11-2020",
                 Latitude = string.Empty,
                 LatitudeDelivery = string.Empty,
                 LittlePackages = 1.0,
@@ -99,15 +99,16 @@ namespace GPapApiExample
                 Provincia = "test",
                 ProvinciaDelivery = "TEST",
                 Quantity = 49.0,
-                ToGAM = true,
-                Transport = "Motorcycle",                
+                Transport = "Motorcycle",
+                Bill = "MyTestMyTest",
+                ToGAM = true
             };
 
             try
             {
 
 
-                var client = new RestClient("http://166.62.126.46:8082");
+                var client = new RestClient("https://api.puertaapuertacr.com");
                 var request = new RestRequest("api/Package/Create", Method.POST);
                 request.RequestFormat = DataFormat.Json;
                 request.AddBody(pack);
