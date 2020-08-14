@@ -4,6 +4,7 @@ using RestSharp;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace GPapApiExample
     class Program
     {
         private static HttpClient _httpClient;
-        private const string REST_URL = "https://api.puertaapuertacr.com/{0}";
+        private const string REST_URL = "https://localhost:44378/{0}";
 
         static void Main(string[] args)
         {
@@ -34,10 +35,10 @@ namespace GPapApiExample
             User user = null;
             try
             {
-                string username = "yourusername";
-                string password = "yourpassword";
+                string username = "intcomex";
+                string password = ">+@d3a9_R7m.^m5E";
 
-                var uri = new Uri(string.Format(REST_URL, "api/User/login"));
+                var uri = new Uri(string.Format(REST_URL, "api/v1/User/login"));
                 var jsonRequest = JsonConvert.SerializeObject(new { Username = username, Password = password });
                 var stringContent = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
 
@@ -67,7 +68,7 @@ namespace GPapApiExample
 
         private static async void CreatePackage(string token)
         {
-            Package pack = new Package()
+            Package package = new Package()
             {
                 Address = "CALLE 32 con AV 2, DIAGONAL A LA EMBAJADA DE ESPAÑA. Edf. Alefbet",
                 Address2 = string.Empty,
@@ -108,32 +109,37 @@ namespace GPapApiExample
             {
 
 
-                var client = new RestClient("https://api.puertaapuertacr.com");
-                var request = new RestRequest("api/Package/Create", Method.POST);
-                request.RequestFormat = DataFormat.Json;
-                request.AddBody(pack);
-                request.AddHeader("access-token", token);
+                var client = new RestClient("https://localhost:44378/");
+                //var request = new RestRequest("api/v1/Package/Create", Method.POST);
+                //request.RequestFormat = DataFormat.Json;
+                //request.AddBody(pack);
+                //request.AddHeader("access-token", token);
 
-                var response = client.Execute(request);
-                var obj = JObject.Parse(response.Content);
+                //var response = client.Execute(request);
+                //var obj = JObject.Parse(response.Content);
 
-                /*var uri = new Uri(string.Format(REST_URL, "api/Package/Create"));
+                var uri = new Uri(string.Format(REST_URL, "api/v1/Package/Create"));
+                var jsonRequest = JsonConvert.SerializeObject(package);
+                var stringContent = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
 
                 HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, uri);
+                requestMessage.Content = stringContent;
 
-                requestMessage.Headers.Add("access-token", token);
+                //requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", $" {token}");
 
                 if (_httpClient == null)
                 {
                     _httpClient = new HttpClient();
                 }
 
-                var response = await _httpClient.PostAsync("api/Package/Create", null);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{token}");
+
+                var response = _httpClient.PostAsync(uri, new StringContent(jsonRequest, Encoding.UTF8, "application/json")).Result;
 
                 //if (response.IsSuccessStatusCode)
                 //{
                 var content = await response.Content.ReadAsStringAsync();
-                //}*/
+                //}
             }
             catch (Exception ex)
             {
